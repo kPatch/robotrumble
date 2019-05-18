@@ -41,19 +41,32 @@
       messageType : 'geometry_msgs/Twist'
     });
   
-    var twist = new ROSLIB.Message({
+    var twistUp = new ROSLIB.Message({
       linear : {
         x : 0.1,
-        y : 0.2,
-        z : 0.3
+        y : 0.0,
+        z : 0.0
       },
       angular : {
-        x : -0.1,
-        y : -0.2,
-        z : -0.3
+        x : 0.0,
+        y : 0.0,
+        z : 0.0
       }
     });
-    cmdVel.publish(twist);
+
+    var twistDown = new ROSLIB.Message({
+      linear : {
+        x : 0.0,
+        y : 0.0,
+        z : 0.0
+      },
+      angular : {
+        x : 0.0,
+        y : 0.0,
+        z : 0.0
+      }
+    });
+    cmdVel.publish(twistUp);
   
     // Subscribing to a Topic
     // ----------------------
@@ -80,11 +93,14 @@
         // we are only interested in alphanumeric keys
         // if (charList.indexOf(key) === -1) return;
 
-        // console.log(key);
+        console.log(key);
         if(key === 'arrowup') {
           console.log('Command sent')
-          cmdVel.publish(twist);
-        } else {
+          cmdVel.publish(twistUp);
+        } else if (key === 'arrowdown') {
+          cmdVel.publish(twistDown)
+        }
+          else {
           console.log('No command sent')
         }
     });
